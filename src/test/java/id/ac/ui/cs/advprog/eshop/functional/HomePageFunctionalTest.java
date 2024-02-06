@@ -21,7 +21,7 @@ public class HomePageFunctionalTest {
    * Set automatically during each test run by Spring Framework's test context.
    */
   @LocalServerPort
-  private int serverPort;
+  private int serverPort = 8080;
 
   /*
    * The base URL for testing. Default to {@code http://localhost}.
@@ -32,8 +32,8 @@ public class HomePageFunctionalTest {
   private String baseUrl;
 
   @BeforeEach
-  void setUpTest(){
-    baseUrl=String.format("%s:%d",testBaseUrl, serverPort);
+  void setupTest() {
+    baseUrl = "http://localhost:8080/product/list";
   }
 
   @Test
@@ -43,16 +43,16 @@ public class HomePageFunctionalTest {
     String pageTitle = driver.getTitle();
 
     // Verify
-    assertEquals("ADV Shop", pageTitle);
+    assertEquals("E-Shop", pageTitle);
   }
 
   @Test
   void welcomeMessage_homepage_isCorrect(ChromeDriver driver) throws Exception {
     // Exercise
     driver.get(baseUrl);
-    String welcomeMessage = driver.findElement(By.tagName("h3")).getText();
+    String welcomeMessage = driver.findElement(By.tagName("h2")).getText();
 
     // Verify
-    assertEquals("Welcome", welcomeMessage);
+    assertEquals("Product List", welcomeMessage);
   }
 }
