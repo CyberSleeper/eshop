@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.eshop.contoller;
+package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
@@ -34,5 +34,19 @@ public class ProductController {
     List<Product> allProducts = service.findAll();
     model.addAttribute("products", allProducts);
     return "productList";
+  }
+
+  @GetMapping("/edit/{productId}")
+  public String editProductPage(@PathVariable String productId, Model model) {
+    Product product = service.findById(productId);
+    model.addAttribute("product", product);
+    return "editProduct";
+  }
+
+  @PostMapping("/edit/{productId}")
+  public String editProductPut(@PathVariable("productId") String productId, @ModelAttribute Product product, Model model) {
+    product.setId(productId);
+    service.edit(product);
+    return "redirect:/product/list";
   }
 }
