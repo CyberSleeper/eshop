@@ -98,4 +98,40 @@ public class ProductRepositoryTest {
     Product savedProduct = productRepository.findById("a0f9de46-90b1-437d-a0bf-d0821dde9096");
     assertNull(savedProduct);
   }
+  @Test
+  void testEdit() {
+    Product product1 = new Product();
+    product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+    product1.setProductName("Sampo Cap Bambang");
+    product1.setProductQuantity(100);
+    productRepository.create(product1);
+
+    Product product2 = new Product();
+    product2.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+    product2.setProductName("Sampo Cap Usep");
+    product2.setProductQuantity(50);
+    productRepository.edit(product2);
+
+    Product savedProduct = productRepository.findById("eb558e9f-1c39-460e-8860-71af6af63bd6");
+    assertEquals(product2.getProductId(), savedProduct.getProductId());
+    assertEquals(product2.getProductName(), savedProduct.getProductName());
+    assertEquals(product2.getProductQuantity(), savedProduct.getProductQuantity());
+  }
+  @Test
+  void testEditNotFound() {
+    Product product1 = new Product();
+    product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+    product1.setProductName("Sampo Cap Bambang");
+    product1.setProductQuantity(100);
+    productRepository.create(product1);
+
+    Product product2 = new Product();
+    product2.setProductId("a0f9de46-90b1-437d-a0bf-d0821dde9096");
+    product2.setProductName("Sampo Cap Usep");
+    product2.setProductQuantity(50);
+    productRepository.edit(product2);
+
+    Product savedProduct = productRepository.findById("a0f9de46-90b1-437d-a0bf-d0821dde9096");
+    assertNull(savedProduct);
+  }
 }
