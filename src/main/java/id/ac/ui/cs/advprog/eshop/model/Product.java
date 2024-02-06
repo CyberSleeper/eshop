@@ -12,10 +12,14 @@ public class Product {
 
   public Product() {
     productIdCounter++;
-    this.productId = "" + productIdCounter;
+    this.productId = String.valueOf(productIdCounter);
   }
 
-  public String getId() {
+  public String getProductId() {
     return productId;
+  }
+
+  public void setProductId(String id) {
+    this.productId = id;
   }
 }
