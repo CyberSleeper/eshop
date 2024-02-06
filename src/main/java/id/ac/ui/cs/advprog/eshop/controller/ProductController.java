@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.eshop.contoller;
+package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
@@ -34,5 +34,12 @@ public class ProductController {
     List<Product> allProducts = service.findAll();
     model.addAttribute("products", allProducts);
     return "productList";
+  }
+
+  @PostMapping("/delete/{productId}")
+  public String deleteProduct(@PathVariable String productId, Model model) {
+    service.delete(productId);
+    return "redirect:/product/list";
+
   }
 }
