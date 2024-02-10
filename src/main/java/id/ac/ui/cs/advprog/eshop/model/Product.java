@@ -15,6 +15,12 @@ public class Product {
     this.productId = String.valueOf(productIdCounter);
   }
 
+  public Product(String id, String name, int quantity) {
+    this.productId = id;
+    this.productName = name;
+    this.productQuantity = quantity;
+  }
+
   public String getProductId() {
     return productId;
   }
