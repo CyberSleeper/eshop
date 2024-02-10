@@ -9,7 +9,11 @@ import java.util.List;
 
 @Repository
 public class ProductRepository {
-  private List<Product> productData = new ArrayList<>();
+  private List<Product> productData;
+
+  public ProductRepository() {
+    productData = new ArrayList<>();
+  }
 
   public Product create(Product product) {
     productData.add(product);
