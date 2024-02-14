@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class ContextLoadTest {
+class ContextLoadTest {
 
   @Autowired
   private ProductController productController;
