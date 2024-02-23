@@ -19,4 +19,9 @@ class EshopApplicationTests {
 		assertNotNull(productController);
 	}
 
+	@Test
+	void TestMain() {
+		EshopApplication.main(new String[] {});
+	}
+
 }

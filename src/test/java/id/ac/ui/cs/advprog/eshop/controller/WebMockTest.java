@@ -31,6 +31,14 @@ public class WebMockTest {
   private JacksonTester<Product> jsonProduct;
 
   @Test
+  public void canGetHomePage() throws Exception {
+    MockHttpServletResponse response = mockMvc.perform(
+        get("/"))
+        .andReturn().getResponse();
+    assert(response.getStatus() == HttpStatus.SC_OK);
+  }
+
+  @Test
   public void canGetCreateProductPage() throws Exception {
     MockHttpServletResponse response = mockMvc.perform(
         get("/product/create"))
