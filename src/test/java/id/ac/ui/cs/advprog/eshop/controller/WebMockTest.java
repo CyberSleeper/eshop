@@ -37,6 +37,7 @@ public class WebMockTest {
         .andReturn().getResponse();
     assert(response.getStatus() == HttpStatus.SC_OK);
   }
+
   @Test
   public void canGetCreateProductPage() throws Exception {
     MockHttpServletResponse response = mockMvc.perform(
