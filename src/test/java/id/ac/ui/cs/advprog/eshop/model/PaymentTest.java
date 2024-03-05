@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.eshop.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,45 +29,49 @@ public class PaymentTest {
     products.add(product1);
     products.add(product2);
     this.order = new Order("orderId", products, 1708560000L, "Suisei no Copath");
-    this.payment = new Payment("paymentId", "method", new HashMap<>(), order);
   }
 
   @Test
-  void testCreatePayment() {
-    assertSame(order, payment.getOrder());
-    assertEquals("paymentId", payment.getId());
-    assertEquals("method", payment.getMethod());
+  void testCreatePaymentWithNullOrder() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      Map<String, String> paymentData = new HashMap<>();
+      paymentData.put("voucherCode", "ESHOP1234567890123");
+      this.payment = new Payment("paymentId", "VOUCHER", paymentData, null);
+    });
   }
 
   @Test
-  void testCreatePaymentStatus() {
-    payment.setStatus("status");
-    assertEquals("status", payment.getStatus());
+  void testCreatePaymentWithNullPaymentData() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      this.payment = new Payment("paymentId", "VOUCHER", null, this.order);
+    });
   }
 
   @Test
-  void testCreatePaymentData() {
+  void testCreatePaymentWithInvalidVoucherCode() {
     Map<String, String> paymentData = new HashMap<>();
-    paymentData.put("key", "value");
-    payment.setPaymentData(paymentData);
-    assertEquals(paymentData, payment.getPaymentData());
+    paymentData.put("voucherCode", "ESHOP123");
+    assertThrows(IllegalArgumentException.class, () -> {
+      this.payment = new Payment("paymentId", "VOUCHER", paymentData, this.order);
+    });
   }
 
   @Test
-  void testCreatePaymentDataNull() {
-    payment.setPaymentData(null);
-    assertEquals(null, payment.getPaymentData());
+  void testCreatePaymentWithInvalidPaymentMethod() {
+    Map<String, String> paymentData = new HashMap<>();
+    paymentData.put("voucherCode", "ESHOP12345678901");
+    assertThrows(IllegalArgumentException.class, () -> {
+      this.payment = new Payment("paymentId", "INVALID", paymentData, this.order);
+    });
   }
 
   @Test
-  void testCreatePaymentStatusNull() {
-    payment.setStatus(null);
-    assertEquals(null, payment.getStatus());
+  void testCreatePaymentWithSuccessStatus() {
+    Map<String, String> paymentData = new HashMap<>();
+    paymentData.put("voucherCode", "ESHOP12345678901");
+    this.payment = new Payment("paymentId", "VOUCHER", paymentData, this.order);
+    this.payment.setStatus("SUCCESS");
+    assertEquals("SUCCESS", this.payment.getStatus());
   }
 
-  @Test
-  void testCreatePaymentStatusEmpty() {
-    payment.setStatus("");
-    assertEquals("", payment.getStatus());
-  }
 }
