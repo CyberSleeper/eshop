@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 
 public class PaymentTest {
   private Payment payment;
@@ -74,6 +75,36 @@ public class PaymentTest {
     this.payment = new Payment("paymentId", PaymentMethod.VOUCHER.getValue(), paymentData, this.order);
     this.payment.setStatus(PaymentStatus.SUCCESS.getValue());
     assertEquals(PaymentStatus.SUCCESS.getValue(), this.payment.getStatus());
+
   }
 
+  @Test
+  void testCreatePaymentWithRejectedStatus() {
+    Map<String, String> paymentData = new HashMap<>();
+    paymentData.put("voucherCode", "ESHOP12345678901");
+    this.payment = new Payment("paymentId", PaymentMethod.VOUCHER.getValue(), paymentData, this.order);
+    this.payment.setStatus(PaymentStatus.REJECTED.getValue());
+    assertEquals(PaymentStatus.REJECTED.getValue(), this.payment.getStatus());
+    assertEquals(OrderStatus.FAILED.getValue(), this.order.getStatus());
+  }
+
+  @Test
+  void testCreatePaymentWithInvalidStatus() {
+    Map<String, String> paymentData = new HashMap<>();
+    paymentData.put("voucherCode", "ESHOP12345678901");
+    this.payment = new Payment("paymentId", PaymentMethod.VOUCHER.getValue(), paymentData, this.order);
+    assertThrows(IllegalArgumentException.class, () -> {
+      this.payment.setStatus("INVALID");
+    });
+  }
+
+  @Test
+  void testCreatePaymentWithInvalidMethod() {
+    Map<String, String> paymentData = new HashMap<>();
+    paymentData.put("voucherCode", "ESHOP12345678901");
+    this.payment = new Payment("paymentId", PaymentMethod.VOUCHER.getValue(), paymentData, this.order);
+    assertThrows(IllegalArgumentException.class, () -> {
+      this.payment.setMethod("INVALID");
+    });
+  }
 }

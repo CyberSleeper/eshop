@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 
 @Getter
 public class Payment {
@@ -16,21 +17,24 @@ public class Payment {
     private Order order;
 
     public Payment(String id, String method, Map<String, String> paymentData, Order order) {
-        this.id = id;
-        this.setMethod(method);
-        this.setPaymentData(paymentData);
         if (order == null) {
             throw new IllegalArgumentException("Order cannot be null");
         } else {
             this.order = order;
         }
+        
+        this.id = id;
+        this.setMethod(method);
+        this.setPaymentData(paymentData);
     }
 
     public void setStatus(String status) {
         if (status.equals(PaymentStatus.SUCCESS.getValue())) {
             this.status = status;
+            this.order.setStatus(OrderStatus.SUCCESS.getValue());
         } else if (status.equals(PaymentStatus.REJECTED.getValue())) {
             this.status = status;
+            this.order.setStatus(OrderStatus.FAILED.getValue());
         } else {
             throw new IllegalArgumentException("Invalid status");
         }
