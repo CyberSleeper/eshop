@@ -48,3 +48,13 @@ The disadvantages of applying the SOLID design in my code are:
 By separating each class into different files, I make sure that each class has only one responsibility. This makes the code more complex. If I want to understand the behavior of a class, I need to understand the class that has the responsibility to handle the behavior. I also need to understand the other classes. For example, if I want to understand the behavior of the ProductController class, I need to understand the ProductController class. I also need to understand the ProductRepository class and the Product class.
 - The code is more strict.
 By implementing the interface, I make sure that the client only knows what it needs. This makes the code more strict. If I want to change the behavior of a class, I need to change the class that has the responsibility to handle the behavior. I also need to change the other classes. For example, if I want to change the behavior of the ProductController class, I need to change the ProductController class. I also need to change the ProductRepository class and the Product class.
+
+## Week 4
+
+### Reflection 1
+1. I find the TDD flow valuable. It allows me to write tests first, ensuring they accurately reflect the requirements. Then, I write code solely to make those tests pass, guaranteeing my code aligns with the requirements. This iterative process of test-driven development helps me write clear, well-defined, and reliable code.
+2. The tests adhere to the F.I.R.S.T. principle, ensuring they are efficient and reliable.
+- Fast: They execute quickly, typically within milliseconds.
+- Isolated: They operate independently, not relying on each other for execution.
+- Repeatable: They consistently produce the same results, regardless of execution order.
+- Self-validating: They automatically assess their success, eliminating the need for manual verification.
